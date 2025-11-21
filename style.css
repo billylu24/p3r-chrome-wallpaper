@@ -1,0 +1,115 @@
+/* 全局设定 */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #000;
+  font-family: "Microsoft YaHei", sans-serif;
+}
+
+/* 视频背景：第 0 层 */
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* 内容容器：第 100 层 */
+.center-container {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+/* Logo */
+.logo {
+  max-width: 250px;
+  height: auto;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+}
+
+/* 搜索框 */
+.search-form {
+  position: relative; /* 关键：让下拉列表以此为基准定位 */
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 5px 15px;
+  display: flex;
+  align-items: center;
+  width: 400px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.search-form:hover {
+  background: rgba(255, 255, 255, 0.25);
+  width: 420px;
+}
+
+.search-form input {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 16px;
+  padding-left: 10px;
+}
+
+.search-form input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.search-form button {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+/* 推荐列表 */
+.suggestions {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  list-style: none;
+  padding: 5px 0;
+  margin: 0;
+  display: none; /* 默认隐藏 */
+  overflow: hidden;
+  z-index: 999;
+}
+
+.suggestions li {
+  padding: 10px 20px;
+  color: #eee;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.suggestions li:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}

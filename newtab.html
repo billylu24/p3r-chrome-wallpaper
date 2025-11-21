@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>新标签页</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <video autoplay loop muted playsinline id="bg-video">
+    <source src="loop.mp4" type="video/mp4">
+  </video>
+
+  <div class="center-container">
+    
+    <img src="p3r.png" alt="Logo" class="logo">
+
+    <form action="https://www.google.com/search" method="get" class="search-form" target="_blank" autocomplete="off">
+      
+      <input type="text" id="search-input" name="q" placeholder="搜索 Google..." required>
+      <button type="submit">🔍</button>
+
+      <ul id="suggestions-list" class="suggestions"></ul>
+    </form>
+    
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
