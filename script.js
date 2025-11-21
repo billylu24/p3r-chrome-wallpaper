@@ -2,56 +2,50 @@ const searchInput = document.getElementById('search-input');
 const suggestionsList = document.getElementById('suggestions-list');
 const searchForm = document.querySelector('.search-form');
 
-// 1. 监听输入
+// 搜索 & 动画逻辑
 searchInput.addEventListener('input', function() {
     const query = this.value.trim();
 
-    // 如果输入为空，隐藏列表
     if (!query) {
         suggestionsList.style.display = 'none';
+        document.body.classList.remove('search-active');
         return;
     }
 
-    // 使用 fetch 请求 Google API
-    // client=firefox 返回的是规范的 JSON 格式
     fetch(`https://suggestqueries.google.com/complete/search?client=firefox&q=${query}`)
         .then(response => response.json())
         .then(data => {
-            // data[1] 是推荐词数组
             const suggestions = data[1];
-
-            // 清空旧列表
             suggestionsList.innerHTML = '';
 
             if (suggestions && suggestions.length > 0) {
-                // 限制显示前 6 个
                 suggestions.slice(0, 6).forEach(text => {
                     const li = document.createElement('li');
                     li.textContent = text;
-                    
-                    // 点击某一项：填入并搜索
                     li.addEventListener('click', () => {
                         searchInput.value = text;
                         searchForm.submit();
                     });
-
                     suggestionsList.appendChild(li);
                 });
-                
-                // 显示列表
+
+                // 显示列表并触发界面展开动画
                 suggestionsList.style.display = 'block';
+                document.body.classList.add('search-active');
+
             } else {
                 suggestionsList.style.display = 'none';
+                document.body.classList.remove('search-active');
             }
         })
         .catch(err => {
-            console.log("获取推荐失败，可能是网络问题", err);
+            console.log("Error fetching suggestions:", err);
         });
 });
 
-// 2. 点击空白处关闭列表
 document.addEventListener('click', (e) => {
     if (!searchForm.contains(e.target)) {
         suggestionsList.style.display = 'none';
+        document.body.classList.remove('search-active');
     }
 });

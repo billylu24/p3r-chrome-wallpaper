@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>新标签页</title>
+  <title>New Tab</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,17 +14,46 @@
   <div class="video-overlay"></div>
 
   <div class="center-container">
-    
+
     <img src="p3r.png" alt="Logo" class="logo">
 
     <form action="https://www.google.com/search" method="get" class="search-form" target="_blank" autocomplete="off">
-      
-      <input type="text" id="search-input" name="q" placeholder="搜索 Google..." required>
+      <input type="text" id="search-input" name="q" placeholder="Search Google..." required>
       <button type="submit">🔍</button>
-
       <ul id="suggestions-list" class="suggestions"></ul>
     </form>
-    
+
+    <div class="shortcuts-container">
+        <a href="https://open.spotify.com" class="shortcut-item" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/512px-Spotify_logo_without_text.svg.png" alt="Spotify">
+        </a>
+
+        <a href="https://discord.com/channels/@me" class="shortcut-item" target="_blank">
+            <img src="https://www.google.com/s2/favicons?sz=128&domain=discord.com" alt="Discord">
+        </a>
+
+        <a href="https://www.instagram.com" class="shortcut-item" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/512px-Instagram_logo_2016.svg.png" alt="Instagram">
+        </a>
+
+        <a href="https://leetcode.com/problemset/" class="shortcut-item" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png" alt="LeetCode">
+        </a>
+
+        <a href="https://gemini.google.com" class="shortcut-item" target="_blank">
+            <img src="https://www.google.com/s2/favicons?sz=128&domain=gemini.google.com" alt="Gemini">
+        </a>
+
+        <a href="https://chat.openai.com" class="shortcut-item" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" alt="ChatGPT">
+        </a>
+
+        <a href="https://mail.google.com" class="shortcut-item" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/512px-Gmail_icon_%282020%29.svg.png" alt="Gmail">
+        </a>
+
+        </div>
+
   </div>
 
   <script src="script.js"></script>
