@@ -67,7 +67,7 @@ body.search-active .center-container {
 
 /* Logo */
 .logo {
-  max-width: 360px;
+  max-width: 200px;
   height: auto;
   filter: drop-shadow(0 4px 10px rgba(0,0,0,0.7));
   transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
