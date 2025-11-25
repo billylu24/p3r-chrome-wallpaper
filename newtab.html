@@ -12,49 +12,84 @@
   </video>
 
   <div class="video-overlay"></div>
-
   <canvas id="rain-canvas"></canvas>
 
-  <div class="center-container">
+  <!-- === 右上角 Google 工具栏 === -->
+  <div class="top-menu-container">
+      <!-- 触发按钮 (头像) -->
+      <div class="menu-trigger" id="google-menu-btn">
+          <!-- 确保图片文件名正确 -->
+          <img src="ChatGPT Image Nov 20, 2025, 08_00_35 PM.png" alt="Menu">
+          <div class="trigger-ring"></div>
+      </div>
 
+      <!-- Google 应用网格 -->
+      <div class="google-apps-grid" id="google-apps-grid">
+          <a href="https://mail.google.com" target="_blank" class="app-item">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/512px-Gmail_icon_%282020%29.svg.png" alt="Gmail">
+              <span>Gmail</span>
+          </a>
+          <!-- 使用本地文件替换 Drive 图标 -->
+          <a href="https://drive.google.com" target="_blank" class="app-item">
+              <img src="Google_Drive_icon_(2020).svg.png" alt="Drive">
+              <span>Drive</span>
+          </a>
+          <a href="https://docs.google.com" target="_blank" class="app-item">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Google_Docs_logo_%282014-2020%29.svg/512px-Google_Docs_logo_%282014-2020%29.svg.png" alt="Docs">
+              <span>Docs</span>
+          </a>
+          <a href="https://docs.google.com/presentation" target="_blank" class="app-item">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Google_Slides_logo_%282014-2020%29.svg/512px-Google_Slides_logo_%282014-2020%29.svg.png" alt="Slides">
+              <span>Slides</span>
+          </a>
+          <a href="https://docs.google.com/spreadsheets" target="_blank" class="app-item">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Google_Sheets_logo_%282014-2020%29.svg/512px-Google_Sheets_logo_%282014-2020%29.svg.png" alt="Sheets">
+              <span>Sheets</span>
+          </a>
+          <a href="https://www.google.com/maps" target="_blank" class="app-item">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Google_Maps_icon_%282020%29.svg/512px-Google_Maps_icon_%282020%29.svg.png" alt="Maps">
+              <span>Maps</span>
+          </a>
+          <!-- 使用本地文件替换 Photos 图标 -->
+          <a href="https://photos.google.com" target="_blank" class="app-item">
+              <img src="Google-photos-logo-design-illustration-premium-vector-PNG.png" alt="Photos">
+              <span>Photos</span>
+          </a>
+      </div>
+  </div>
+
+  <div class="center-container">
     <img src="logo.svg" alt="Logo" class="logo">
 
     <form action="https://www.google.com/search" method="get" class="search-form" target="_blank" autocomplete="off">
-      <input type="text" id="search-input" name="q" placeholder="Search Google..." required>
+      <input type="text" id="search-input" name="q" placeholder="Search..." required>
+
+      <div class="engine-group">
+          <button type="button" class="engine-btn bili" id="btn-bili">Bili</button>
+          <button type="button" class="engine-btn git" id="btn-github">Git</button>
+          <button type="button" class="engine-btn yt" id="btn-yt">YT</button>
+      </div>
+
       <button type="submit">🔍</button>
       <ul id="suggestions-list" class="suggestions"></ul>
     </form>
 
-    <div class="shortcuts-container">
-        <a href="https://open.spotify.com" class="shortcut-item" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/512px-Spotify_logo_without_text.svg.png" alt="Spotify">
-        </a>
-
-        <a href="https://discord.com/channels/@me" class="shortcut-item" target="_blank">
-            <img src="https://www.google.com/s2/favicons?sz=128&domain=discord.com" alt="Discord">
-        </a>
-
-        <a href="https://www.instagram.com" class="shortcut-item" target="_blank">
-            <img src="https://www.google.com/s2/favicons?sz=256&domain=instagram.com" alt="Instagram">
-        </a>
-
-        <a href="https://leetcode.com/problemset/" class="shortcut-item" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png" alt="LeetCode">
-        </a>
-
-        <a href="https://gemini.google.com" class="shortcut-item" target="_blank">
-            <img src="https://www.google.com/s2/favicons?sz=128&domain=gemini.google.com" alt="Gemini">
-        </a>
-
-        <a href="https://chat.openai.com" class="shortcut-item" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" alt="ChatGPT">
-        </a>
-
-        <a href="https://mail.google.com" class="shortcut-item" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/512px-Gmail_icon_%282020%29.svg.png" alt="Gmail">
-        </a>
+    <div class="shortcuts-container" id="shortcuts-container">
+        <!-- JS 生成快捷键 -->
     </div>
+  </div>
 
+  <!-- 添加快捷键弹窗 -->
+  <div class="modal-overlay" id="add-modal">
+      <div class="modal-content">
+          <h3>Add Shortcut</h3>
+          <input type="text" id="shortcut-name" class="modal-input" placeholder="Name">
+          <input type="text" id="shortcut-url" class="modal-input" placeholder="URL">
+          <div class="modal-buttons">
+              <button class="btn-cancel" id="modal-cancel">Cancel</button>
+              <button class="btn-save" id="modal-save">Done</button>
+          </div>
+      </div>
   </div>
 
   <script src="script.js"></script>
