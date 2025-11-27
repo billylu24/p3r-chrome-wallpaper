@@ -1,4 +1,4 @@
-/* style.css - 完整修复 + P3R 动画终极版 */
+/* style.css - 最终精简修正版 (无重复 + 包含所有特效) */
 
 /* --- 全局设置 --- */
 * { box-sizing: border-box; }
@@ -16,55 +16,41 @@ body, html {
 /* --- 背景视频 --- */
 #bg-video {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: 0;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  object-fit: cover; z-index: 0;
 }
 
 /* --- 遮罩层 --- */
 .video-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0; width: 100%; height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 1;
-  pointer-events: none;
+  z-index: 1; pointer-events: none;
 }
 
 /* --- 雨滴特效画布 --- */
 #rain-canvas {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  pointer-events: none;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 2; pointer-events: none;
 }
 
 /* =========================================
-   右上角 Google 工具栏 (强制定位 + P3R 风格)
+   右上角 Google 工具栏 (P3R 风格)
    ========================================= */
 .top-menu-container {
     position: fixed;
     top: 30px;
-    right: 40px; /* 强制靠右 */
-    left: auto;  /* 清除左侧定位 */
+    right: 40px;
+    left: auto; /* 确保不靠左 */
     z-index: 1000;
-    /* 容器本身不阻挡点击，允许点击下方的雨滴或背景 */
-    pointer-events: none;
+    pointer-events: none; /* 容器穿透，允许点击背景 */
 }
-/* 恢复内部元素的点击交互 */
 .top-menu-container > * {
-    pointer-events: auto;
+    pointer-events: auto; /* 内部元素恢复点击 */
 }
 
-/* 触发按钮 (头像) - 90px 大尺寸 */
+/* 头像按钮 */
 .menu-trigger {
     position: relative;
     width: 90px;
@@ -72,21 +58,18 @@ body, html {
     cursor: pointer;
     border-radius: 50%;
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    float: right; /* 确保靠右 */
+    float: right;
 }
 
 .menu-trigger img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 100%; height: 100%; object-fit: cover;
     border-radius: 50%;
     border: 3px solid rgba(255, 255, 255, 0.9);
     box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-    z-index: 2;
-    position: relative;
+    z-index: 2; position: relative;
 }
 
-/* 头像光环动画 - P3R 青色 */
+/* 头像光环 */
 .trigger-ring {
     position: absolute;
     top: -6px; left: -6px; right: -6px; bottom: -6px;
@@ -103,384 +86,241 @@ body, html {
 
 @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-/* === P3R 风格下拉菜单 (深蓝 + 旋转动画) === */
+/* 下拉菜单 (P3R 深蓝 + 旋转展开动画) */
 .google-apps-grid {
     position: absolute;
-    top: 100px;  /* 位于头像正下方 */
-    right: 0;    /* 靠右对齐 */
+    top: 100px;
+    right: 0;
     width: 320px;
-
-    /* P3R 核心风格：深海军蓝背景 */
-    background: rgba(0, 20, 50, 0.95);
-
-    /* 磨砂效果 */
+    background: rgba(0, 20, 50, 0.95); /* 深海军蓝 */
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-
-    /* P3R 核心风格：亮青色边框 */
-    border: 2px solid #00E5FF;
+    border: 2px solid #00E5FF; /* 亮青色边框 */
     border-radius: 12px;
-
-    /* 强烈的阴影 */
     box-shadow: 0 10px 40px rgba(0, 10, 30, 0.9);
-
     padding: 20px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
 
-    /* 初始状态：隐藏 */
+    /* 动画初始状态 */
     opacity: 0;
     pointer-events: none;
-
-    /* === 动画核心：右上角为轴，向左旋转展开 === */
     transform-origin: top right;
     transform: scale(0.6) rotate(-20deg) translateX(30px);
-
-    /* 弹性过渡效果 */
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* 菜单激活状态 */
 .google-apps-grid.active {
     opacity: 1;
     pointer-events: auto;
-    /* 恢复正常状态 */
     transform: scale(1) rotate(0deg) translateX(0);
 }
 
-/* 单个 App 图标项 */
 .app-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    color: #a0c0ff; /* 淡蓝色文字 */
-    font-size: 13px;
-    padding: 10px;
-    border-radius: 8px;
+    display: flex; flex-direction: column; align-items: center;
+    text-decoration: none; color: #a0c0ff; font-size: 13px;
+    padding: 10px; border-radius: 8px;
     transition: background 0.2s, transform 0.2s;
 }
-
-.app-item img {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 8px;
-    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
-}
-
-.app-item:hover {
-    background: rgba(0, 229, 255, 0.15); /* 青色高亮背景 */
-    color: #fff;
-    transform: translateY(-3px);
-}
-.app-item:hover img {
-    transform: scale(1.1);
-}
+.app-item img { width: 48px; height: 48px; margin-bottom: 8px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)); }
+.app-item:hover { background: rgba(0, 229, 255, 0.15); color: #fff; transform: translateY(-3px); }
+.app-item:hover img { transform: scale(1.1); }
 
 /* =========================================
-   中间容器 (主布局)
+   中间容器
    ========================================= */
 .center-container {
   position: absolute;
-  top: 45%;
-  left: 50%;
+  top: 45%; left: 50%;
   transform: translate(-50%, -50%);
   z-index: 100;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: flex; flex-direction: column; align-items: center;
   gap: 25px;
   transition: top 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+body.search-active .center-container { top: 38%; }
 
-/* 搜索激活时上移 */
-body.search-active .center-container {
-  top: 38%;
-}
-
-/* Logo */
 .logo {
-  max-width: 180px;
-  height: auto;
+  max-width: 180px; height: auto;
   filter: drop-shadow(0 4px 10px rgba(0,0,0,0.7));
   transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-body.search-active .logo {
-    transform: scale(0.8);
-    opacity: 0.8;
-}
+body.search-active .logo { transform: scale(0.8); opacity: 0.8; }
 
-/* =========================================
-   搜索框 & 按钮
-   ========================================= */
+/* 搜索框 */
 .search-form {
   position: relative;
   background: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
   border-radius: 50px;
   border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 8px 12px 8px 25px;
-  display: flex;
-  align-items: center;
-  width: 720px;
-  height: 64px;
+  display: flex; align-items: center;
+  width: 720px; height: 64px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-
 .search-form:hover {
-  background: rgba(255, 255, 255, 0.2);
-  width: 740px;
+  background: rgba(255, 255, 255, 0.2); width: 740px;
   box-shadow: 0 15px 40px rgba(0,0,0,0.6);
   border-color: rgba(255, 255, 255, 0.4);
 }
-
 .search-form input {
-    flex-grow: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: white;
-    font-size: 18px;
-    font-weight: 500;
-    padding-right: 15px;
-    height: 100%;
+    flex-grow: 1; background: transparent; border: none; outline: none;
+    color: white; font-size: 18px; font-weight: 500;
+    padding-right: 15px; height: 100%;
 }
 .search-form input::placeholder { color: rgba(255, 255, 255, 0.5); }
 
-/* 引擎按钮组 */
 .engine-group {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    padding-right: 10px;
-    border-right: 1px solid rgba(255,255,255,0.15);
-    margin-right: 10px;
+    display: flex; gap: 6px; align-items: center;
+    padding-right: 10px; border-right: 1px solid rgba(255,255,255,0.15); margin-right: 10px;
 }
-
 .engine-btn {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid transparent;
-    color: rgba(255, 255, 255, 0.7);
-    border-radius: 6px;
-    padding: 0 10px;
-    font-size: 12px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: inherit;
+    background: rgba(0, 0, 0, 0.3); border: 1px solid transparent;
+    color: rgba(255, 255, 255, 0.7); border-radius: 6px;
+    padding: 0 10px; font-size: 12px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; height: 32px;
+    display: flex; align-items: center; justify-content: center;
 }
 .engine-btn:hover { transform: translateY(-1px); color: #fff; border-color: rgba(255,255,255,0.3); }
 .engine-btn.bili:hover { background: #00a1d6; }
 .engine-btn.git:hover { background: #24292e; }
 .engine-btn.yt:hover { background: #ff0000; }
 
-/* 主搜索图标 */
 .search-form button[type="submit"] {
-    background: transparent;
-    border: none;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 20px;
-    cursor: pointer;
-    padding: 0 10px;
-    transition: transform 0.2s;
+    background: transparent; border: none; color: rgba(255, 255, 255, 0.9);
+    font-size: 20px; cursor: pointer; padding: 0 10px; transition: transform 0.2s;
 }
 .search-form button[type="submit"]:hover { transform: scale(1.1); }
 
-/* 搜索建议列表 */
+/* 搜索建议 */
 .suggestions {
-  position: absolute;
-  top: 110%;
-  left: 20px;
-  width: calc(100% - 40px);
-  background: rgba(10, 15, 30, 0.85);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-  list-style: none;
-  padding: 10px 0;
-  margin: 0;
-  display: none;
-  overflow: hidden;
-  z-index: 999;
+  position: absolute; top: 110%; left: 20px; width: calc(100% - 40px);
+  background: rgba(10, 15, 30, 0.85); backdrop-filter: blur(20px);
+  border-radius: 20px; list-style: none; padding: 10px 0; margin: 0;
+  display: none; overflow: hidden; z-index: 999;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 20px 50px rgba(0,0,0,0.8);
   animation: menu-slide-down 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
-@keyframes menu-slide-down {
-    from { opacity: 0; transform: translateY(-20px) scale(0.98); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-}
+@keyframes menu-slide-down { from { opacity: 0; transform: translateY(-20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
 .suggestions li { padding: 12px 30px; color: #ccc; font-size: 16px; cursor: pointer; transition: all 0.15s; }
 .suggestions li:hover { background: rgba(0, 161, 214, 0.2); color: #fff; padding-left: 35px; border-left: 4px solid #00a1d6; }
 
 /* =========================================
-   快捷键区域 (包含删除功能 + Glitch 特效)
+   快捷键 & Glitch 动画 (核心修复)
    ========================================= */
 .shortcuts-container {
-  display: flex;
-  gap: 30px;
-  margin-top: 60px;
+  display: flex; gap: 30px; margin-top: 60px;
   transition: margin-top 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s;
-  flex-wrap: wrap; /* 允许换行 */
-  justify-content: center;
-  max-width: 900px;
+  flex-wrap: wrap; justify-content: center; max-width: 900px;
 }
-
-/* 搜索时下移 */
-body.search-active .shortcuts-container {
-  margin-top: 340px;
-  opacity: 0.6;
-}
+body.search-active .shortcuts-container { margin-top: 340px; opacity: 0.6; }
 body.search-active .shortcuts-container:hover { opacity: 1; }
 
 .shortcut-item {
-  position: relative;
-  width: 70px;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  z-index: 1;
-  cursor: pointer;
+  position: relative; width: 70px; height: 70px;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none; z-index: 1; cursor: pointer;
 }
 
-/* 图标样式 */
 .shortcut-item img {
-    width: 48px;
-    height: 48px;
-    z-index: 10;
+    width: 48px; height: 48px; z-index: 10;
     border-radius: 12px;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
     transition: transform 0.2s;
     background: transparent;
 }
 
-/* 添加按钮 (+) 样式 */
 .add-shortcut-btn {
-    border: 2px dashed rgba(255,255,255,0.3);
-    border-radius: 15px;
-    color: rgba(255,255,255,0.5);
-    font-size: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: 2px dashed rgba(255,255,255,0.3); border-radius: 15px;
+    color: rgba(255,255,255,0.5); font-size: 30px;
+    display: flex; align-items: center; justify-content: center;
     transition: all 0.3s;
 }
-.add-shortcut-btn:hover {
-    border-color: #fff;
-    color: #fff;
-    background: rgba(255,255,255,0.1);
-}
+.add-shortcut-btn:hover { border-color: #fff; color: #fff; background: rgba(255,255,255,0.1); }
 
-/* 删除按钮 (红色叉号) - 默认隐藏 */
+/* 删除按钮 */
 .delete-btn {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    width: 22px;
-    height: 22px;
-    background: #ff4d4f;
-    color: white;
-    border-radius: 50%;
-    font-size: 16px;
-    line-height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.2s, transform 0.2s;
-    z-index: 20;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    cursor: pointer;
+    position: absolute; top: -8px; right: -8px;
+    width: 22px; height: 22px; background: #ff4d4f;
+    color: white; border-radius: 50%; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.2s, transform 0.2s;
+    z-index: 20; box-shadow: 0 2px 5px rgba(0,0,0,0.5); cursor: pointer;
 }
-.delete-btn:hover {
-    background: #ff0000;
-    transform: scale(1.15);
-}
+.delete-btn:hover { background: #ff0000; transform: scale(1.15); }
+.shortcut-item:hover .delete-btn { opacity: 1; }
 
-/* 只有鼠标悬停在快捷键上时，才显示删除按钮 */
-.shortcut-item:hover .delete-btn {
-    opacity: 1;
-}
-
-/* Glitch 震动特效 */
+/* Glitch 伪元素 */
 .shortcut-item:not(.add-shortcut-btn)::before,
 .shortcut-item:not(.add-shortcut-btn)::after {
     content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     opacity: 0;
     clip-path: polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%);
     transition: opacity 0.1s;
     mix-blend-mode: screen;
 }
 
+/* Layer 1: Cyan/White */
 .shortcut-item:not(.add-shortcut-btn)::before {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 255, 255, 0.8);
     z-index: 5;
     transform: scale(1.2) skew(-20deg) rotate(-5deg);
 }
+/* Layer 2: Red/Pink */
 .shortcut-item:not(.add-shortcut-btn)::after {
-    background: rgba(220, 20, 60, 0.7);
+    background: rgba(255, 0, 80, 0.7);
     z-index: 4;
     transform: scale(1.3) skew(-20deg) rotate(-15deg) translate(5px, 5px);
 }
 
 /* Hover 触发特效 */
-.shortcut-item:hover img { transform: scale(1.2) translateY(-5px); }
+.shortcut-item:hover img { transform: scale(1.15) translateY(-5px); }
 .shortcut-item:not(.add-shortcut-btn):hover::before { opacity: 1; animation: glitch-shake-1 0.2s infinite linear alternate-reverse; }
 .shortcut-item:not(.add-shortcut-btn):hover::after { opacity: 1; animation: glitch-shake-2 0.25s infinite linear alternate; }
 
+/* --- 抖动关键帧 --- */
 @keyframes glitch-shake-1 {
     0% { transform: scale(1.2) skew(-20deg) rotate(-5deg) translate(0, 0); }
+    25% { transform: scale(1.25) skew(-25deg) rotate(-5deg) translate(-2px, 1px); }
+    50% { transform: scale(1.2) skew(-20deg) rotate(-5deg) translate(1px, -2px); }
+    75% { transform: scale(1.15) skew(-15deg) rotate(-5deg) translate(2px, 1px); }
     100% { transform: scale(1.2) skew(-20deg) rotate(-5deg) translate(0, 0); }
 }
+
 @keyframes glitch-shake-2 {
     0% { transform: scale(1.3) skew(-20deg) rotate(-15deg) translate(5px, 5px); }
+    30% { transform: scale(1.35) skew(-20deg) rotate(-12deg) translate(7px, 3px); }
+    60% { transform: scale(1.25) skew(-20deg) rotate(-18deg) translate(3px, 7px); }
     100% { transform: scale(1.3) skew(-20deg) rotate(-15deg) translate(5px, 5px); }
 }
 
-/* =========================================
-   模态框 (Modal) - 用于添加快捷键
-   ========================================= */
+/* 模态框 */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
-    z-index: 2000;
-    display: none;
-    align-items: center; justify-content: center;
+    z-index: 2000; display: none; align-items: center; justify-content: center;
 }
 .modal-content {
-    background: #1a1a1a;
-    border: 1px solid #333;
-    border-radius: 12px;
-    padding: 30px;
-    width: 400px;
+    background: #1a1a1a; border: 1px solid #333; border-radius: 12px;
+    padding: 30px; width: 400px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.8);
     display: flex; flex-direction: column; gap: 15px;
 }
 .modal-content h3 { color: #fff; margin: 0 0 10px 0; }
 .modal-input {
-    background: #2a2a2a; border: 1px solid #444;
-    color: #fff; padding: 12px; border-radius: 6px;
-    outline: none; font-size: 16px;
+    background: #2a2a2a; border: 1px solid #444; color: #fff;
+    padding: 12px; border-radius: 6px; outline: none; font-size: 16px;
 }
 .modal-input:focus { border-color: #00E5FF; }
 .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px; }
-.btn-cancel, .btn-save {
-    padding: 10px 20px; border-radius: 6px; cursor: pointer; border: none; font-weight: bold;
-}
-.btn-cancel { background: #333; color: #ccc; }
-.btn-save { background: #00E5FF; color: #000; }
+.btn-cancel { padding: 10px 20px; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; background: #333; color: #ccc; }
+.btn-save { padding: 10px 20px; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; background: #00E5FF; color: #000; }
 
-/* 屏幕适配 */
 @media screen and (max-height: 900px) {
     .center-container { transform: translate(-50%, -50%) scale(0.85); }
 }
