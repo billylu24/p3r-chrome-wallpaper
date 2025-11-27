@@ -28,12 +28,7 @@ body, html {
   z-index: 1; pointer-events: none;
 }
 
-/* --- 雨滴特效画布 --- */
-#rain-canvas {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  z-index: 2; pointer-events: none;
-}
+
 
 /* =========================================
    右上角 Google 工具栏 (P3R 风格)
