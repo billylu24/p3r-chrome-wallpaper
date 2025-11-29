@@ -43,7 +43,7 @@ function loadAndRenderShortcuts() {
         const a = document.createElement('a');
         a.href = item.url;
         a.className = 'shortcut-item';
-        a.target = '_blank';
+
         a.title = item.name;
 
         // 图标
@@ -117,7 +117,8 @@ function setupSearchEngine(id, baseUrl) {
     const btn = document.getElementById(id);
     if(btn) btn.addEventListener('click', () => {
         const query = searchInput.value.trim();
-        if(query) window.open(baseUrl + encodeURIComponent(query), '_blank');
+        // 改为修改当前窗口的 location
+    if(query) window.location.href = baseUrl + encodeURIComponent(query);
     });
 }
 setupSearchEngine('btn-bili', 'https://search.bilibili.com/all?keyword=');
