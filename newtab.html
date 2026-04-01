@@ -1,95 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>New Tab</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>P3R New Tab</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
   <video autoplay loop muted playsinline id="bg-video">
-    <source src="loop.mp4" type="video/mp4">
+    <source src="loop.mp4" type="video/mp4" />
   </video>
 
   <div class="video-overlay"></div>
 
-
-  <!-- === 右上角 Google 工具栏 === -->
-  <div class="top-menu-container">
-      <!-- 触发按钮 (头像) -->
-      <div class="menu-trigger" id="google-menu-btn">
-          <!-- 确保图片文件名正确 -->
-          <img src="ChatGPT Image Nov 20, 2025, 08_00_35 PM.png" alt="Menu">
-          <div class="trigger-ring"></div>
+  <main class="dashboard-grid">
+    <!-- Left top -->
+    <section class="panel tile-panel app-panel left-top">
+      <div class="spotify-mark" aria-label="Spotify">
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
+    </section>
 
-      <!-- Google 应用网格 -->
-      <div class="google-apps-grid" id="google-apps-grid">
-          <a href="https://mail.google.com" target="_self" class="app-item">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/512px-Gmail_icon_%282020%29.svg.png" alt="Gmail">
-              <span>Gmail</span>
-          </a>
-          <!-- 使用本地文件替换 Drive 图标 -->
-          <a href="https://drive.google.com" target="_self" class="app-item">
-              <img src="Google_Drive_icon_(2020).svg.png" alt="Drive">
-              <span>Drive</span>
-          </a>
-          <a href="https://docs.google.com" target="_self" class="app-item">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Google_Docs_logo_%282014-2020%29.svg/512px-Google_Docs_logo_%282014-2020%29.svg.png" alt="Docs">
-              <span>Docs</span>
-          </a>
-          <a href="https://docs.google.com/presentation" target="_self" class="app-item">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Google_Slides_logo_%282014-2020%29.svg/512px-Google_Slides_logo_%282014-2020%29.svg.png" alt="Slides">
-              <span>Slides</span>
-          </a>
-          <a href="https://docs.google.com/spreadsheets" target="_self" class="app-item">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Google_Sheets_logo_%282014-2020%29.svg/512px-Google_Sheets_logo_%282014-2020%29.svg.png" alt="Sheets">
-              <span>Sheets</span>
-          </a>
-          <a href="https://www.google.com/maps" target="_self" class="app-item">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Google_Maps_icon_%282020%29.svg/512px-Google_Maps_icon_%282020%29.svg.png" alt="Maps">
-              <span>Maps</span>
-          </a>
-          <!-- 使用本地文件替换 Photos 图标 -->
-          <a href="https://photos.google.com" target="_self" class="app-item">
-              <img src="Google-photos-logo-design-illustration-premium-vector-PNG.png" alt="Photos">
-              <span>Photos</span>
-          </a>
-      </div>
-  </div>
+    <!-- Left bottom -->
+    <section class="panel tile-panel character-panel left-bottom">
+      <img
+        class="character-img"
+        src="icon.jpg"
+        alt="Character"
+      />
+    </section>
 
-  <div class="center-container">
-    <img src="logo.svg" alt="Logo" class="logo">
+    <!-- Hero -->
+    <section class="hero-block center-top">
+      <img
+        src="logo.svg"
+        alt="P3R Logo"
+        class="logo hero-logo glitch-logo"
+      />
 
-    <form action="https://www.google.com/search" method="get" class="search-form" target="_self" autocomplete="off">
-      <input type="text" id="search-input" name="q" placeholder="Search..." required>
+      <section class="panel info-panel">
+        <p class="info-title">Hi Giaok...</p>
+        <p class="info-subtitle">Rn ur 18.0000 yr old</p>
+      </section>
+    </section>
+
+    <!-- Search -->
+    <form
+      action="https://www.google.com/search"
+      method="get"
+      class="search-form dashboard-search center-search"
+      target="_self"
+      autocomplete="off"
+    >
+      <input
+        type="text"
+        id="search-input"
+        name="q"
+        placeholder="Search..."
+        required
+      />
 
       <div class="engine-group">
-          <button type="button" class="engine-btn bili" id="btn-bili">Bili</button>
-          <button type="button" class="engine-btn git" id="btn-github">Git</button>
-          <button type="button" class="engine-btn yt" id="btn-yt">YT</button>
+        <button type="button" class="engine-btn" id="btn-bili">Bili</button>
+        <button type="button" class="engine-btn" id="btn-github">Git</button>
+        <button type="button" class="engine-btn" id="btn-yt">YT</button>
       </div>
 
-      <button type="submit">🔍</button>
+      <button type="submit" class="search-submit" aria-label="Search">⌕</button>
+
       <ul id="suggestions-list" class="suggestions"></ul>
     </form>
 
-    <div class="shortcuts-container" id="shortcuts-container">
-        <!-- JS 生成快捷键 -->
-    </div>
-  </div>
+    <!-- Clock + tabs -->
+    <section class="center-lower">
+      <section class="panel clock-panel">
+        <div class="clock-face">
+          <div class="digital-clock" id="clock-text">15:18</div>
+        </div>
+      </section>
 
-  <!-- 添加快捷键弹窗 -->
-  <div class="modal-overlay" id="add-modal">
-      <div class="modal-content">
-          <h3>Add Shortcut</h3>
-          <input type="text" id="shortcut-name" class="modal-input" placeholder="Name">
-          <input type="text" id="shortcut-url" class="modal-input" placeholder="URL">
-          <div class="modal-buttons">
-              <button class="btn-cancel" id="modal-cancel">Cancel</button>
-              <button class="btn-save" id="modal-save">Done</button>
-          </div>
+      <div class="shortcuts-container" id="shortcuts-container">
+        <!-- JS injects shortcuts -->
       </div>
+    </section>
+
+    <!-- Calendar -->
+    <section class="panel calendar-panel calendar-block">
+      <div class="calendar-title" id="calendar-title">2026/03/25 Wed</div>
+      <div class="calendar-grid" id="calendar-grid"></div>
+    </section>
+
+    <!-- Right memo -->
+    <aside class="panel memo-panel right-memo"></aside>
+  </main>
+
+  <!-- Add shortcut modal -->
+  <div class="modal-overlay" id="add-modal">
+    <div class="modal-content">
+      <h3>Add Shortcut</h3>
+
+      <input
+        type="text"
+        id="shortcut-name"
+        class="modal-input"
+        placeholder="Name"
+      />
+
+      <input
+        type="text"
+        id="shortcut-url"
+        class="modal-input"
+        placeholder="URL"
+      />
+
+      <div class="modal-buttons">
+        <button class="btn-cancel" id="modal-cancel" type="button">Cancel</button>
+        <button class="btn-save" id="modal-save" type="button">Done</button>
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>
