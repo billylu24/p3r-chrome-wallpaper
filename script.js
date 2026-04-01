@@ -5,6 +5,7 @@ const suggestionsList = document.getElementById('suggestions-list');
 const searchForm = document.querySelector('.search-form');
 
 const shortcutsContainer = document.getElementById('shortcuts-container');
+
 const modal = document.getElementById('add-modal');
 const inputName = document.getElementById('shortcut-name');
 const inputUrl = document.getElementById('shortcut-url');
@@ -15,8 +16,18 @@ const menuBtn = document.getElementById('google-menu-btn');
 const appsGrid = document.getElementById('google-apps-grid');
 
 const clockText = document.getElementById('clock-text');
+const greetingTitle = document.getElementById('greeting-title');
+const greetingAge = document.getElementById('greeting-age');
 
-// 默认快捷方式
+const calendarTitle = document.getElementById('calendar-title');
+const calendarSubtitle = document.getElementById('calendar-subtitle');
+const calendarGrid = document.getElementById('calendar-grid');
+const calendarPrev = document.getElementById('calendar-prev');
+const calendarNext = document.getElementById('calendar-next');
+
+/* =========================
+   默认快捷方式
+========================= */
 const DEFAULT_SHORTCUTS = [
   {
     name: 'Spotify',
@@ -46,9 +57,8 @@ const DEFAULT_SHORTCUTS = [
 ];
 
 /* =========================
-   Google 工具栏逻辑（现在可选）
-   你删掉 HTML 以后这里不会报错
-   ========================= */
+   Google 工具栏逻辑（可选）
+========================= */
 if (menuBtn && appsGrid) {
   menuBtn.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -64,7 +74,7 @@ if (menuBtn && appsGrid) {
 
 /* =========================
    快捷方式管理
-   ========================= */
+========================= */
 function getStoredShortcuts() {
   let shortcuts = [];
 
@@ -102,7 +112,6 @@ function createShortcutElement(item, index) {
   delBtn.className = 'delete-btn';
   delBtn.innerHTML = '×';
   delBtn.title = 'Remove';
-
   delBtn.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -111,7 +120,6 @@ function createShortcutElement(item, index) {
 
   a.appendChild(img);
   a.appendChild(delBtn);
-
   return a;
 }
 
@@ -147,11 +155,11 @@ function removeShortcut(index) {
 
 function openModal() {
   if (!modal) return;
+
   modal.style.display = 'flex';
 
   if (inputName) inputName.value = '';
   if (inputUrl) inputUrl.value = '';
-
   if (inputName) inputName.focus();
 }
 
@@ -176,7 +184,7 @@ function getFaviconUrlFromDomain(url) {
   try {
     domain = new URL(url).hostname;
   } catch (err) {
-    // 保底直接用原始字符串
+    // fallback
   }
 
   return `https://www.google.com/s2/favicons?sz=128&domain=${domain}`;
@@ -191,9 +199,10 @@ function saveShortcut() {
   if (!name || !url) return;
 
   url = normalizeUrl(url);
-  const iconUrl = getFaviconUrlFromDomain(url);
 
+  const iconUrl = getFaviconUrlFromDomain(url);
   const shortcuts = getStoredShortcuts();
+
   shortcuts.push({
     name,
     url,
@@ -239,15 +248,15 @@ if (inputName) {
 
 /* =========================
    搜索引擎按钮
-   ========================= */
+========================= */
 function setupSearchEngine(id, baseUrl) {
   const btn = document.getElementById(id);
-
   if (!btn || !searchInput) return;
 
   btn.addEventListener('click', () => {
     const query = searchInput.value.trim();
     if (!query) return;
+
     window.location.href = baseUrl + encodeURIComponent(query);
   });
 }
@@ -258,7 +267,7 @@ setupSearchEngine('btn-yt', 'https://www.youtube.com/results?search_query=');
 
 /* =========================
    Google 搜索建议
-   ========================= */
+========================= */
 function hideSuggestions() {
   if (suggestionsList) suggestionsList.style.display = 'none';
   document.body.classList.remove('search-active');
@@ -303,7 +312,9 @@ if (searchInput && suggestionsList) {
       return;
     }
 
-    fetch(`https://suggestqueries.google.com/complete/search?client=firefox&q=${encodeURIComponent(query)}`)
+    fetch(
+      `https://suggestqueries.google.com/complete/search?client=firefox&q=${encodeURIComponent(query)}`
+    )
       .then((res) => res.json())
       .then((data) => {
         const suggestions = Array.isArray(data) ? data[1] : [];
@@ -325,8 +336,135 @@ if (searchForm && suggestionsList) {
 }
 
 /* =========================
+   实时年龄
+   出生时间：2007-09-24 17:00 上海时间（UTC+8）
+   对应 UTC：2007-09-24T09:00:00.000Z
+========================= */
+const BIRTH_DATE_UTC = new Date('2007-09-24T09:00:00.000Z');
+const MS_PER_YEAR = 365.2425 * 24 * 60 * 60 * 1000;
+
+function updateGreetingAge() {
+  if (greetingTitle) {
+    greetingTitle.textContent = 'Hi Giaok...';
+  }
+
+  if (!greetingAge) return;
+
+  const now = new Date();
+  const ageYears = (now - BIRTH_DATE_UTC) / MS_PER_YEAR;
+
+  greetingAge.textContent = `Right now you are ${ageYears.toFixed(6)} years old!`;
+}
+
+/* =========================
+   Calendar
+========================= */
+const WEEKDAY_LABELS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+const MONTH_LABELS = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
+
+let calendarCursor = new Date();
+calendarCursor = new Date(calendarCursor.getFullYear(), calendarCursor.getMonth(), 1);
+
+function isSameDate(a, b) {
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  );
+}
+
+function createCalendarCell(text, className = '') {
+  const cell = document.createElement('div');
+  cell.className = `calendar-cell ${className}`.trim();
+  cell.textContent = text;
+  return cell;
+}
+
+function renderCalendar() {
+  if (!calendarGrid || !calendarTitle) return;
+
+  const year = calendarCursor.getFullYear();
+  const month = calendarCursor.getMonth();
+  const today = new Date();
+
+  const firstDayOfMonth = new Date(year, month, 1);
+  const lastDayOfMonth = new Date(year, month + 1, 0);
+
+  const firstWeekday = firstDayOfMonth.getDay();
+  const daysInMonth = lastDayOfMonth.getDate();
+  const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+  calendarTitle.textContent = `${MONTH_LABELS[month]} ${year}`;
+
+  if (calendarSubtitle) {
+    calendarSubtitle.textContent = today.toLocaleDateString('en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric'
+    });
+  }
+
+  calendarGrid.innerHTML = '';
+
+  WEEKDAY_LABELS.forEach((label) => {
+    calendarGrid.appendChild(createCalendarCell(label, 'weekday'));
+  });
+
+  const totalDayCells = 42;
+  let renderedDays = 0;
+
+  for (let i = 0; i < firstWeekday; i++) {
+    const dayNum = daysInPrevMonth - firstWeekday + i + 1;
+    calendarGrid.appendChild(createCalendarCell(dayNum, 'day muted'));
+    renderedDays++;
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dateObj = new Date(year, month, day);
+    const classes = ['day', 'is-month-view'];
+
+    if (isSameDate(dateObj, today)) {
+      classes.push('today');
+    }
+
+    calendarGrid.appendChild(createCalendarCell(day, classes.join(' ')));
+    renderedDays++;
+  }
+
+  for (let nextDay = 1; renderedDays < totalDayCells; nextDay++) {
+    calendarGrid.appendChild(createCalendarCell(nextDay, 'day muted'));
+    renderedDays++;
+  }
+}
+
+if (calendarPrev) {
+  calendarPrev.addEventListener('click', () => {
+    calendarCursor = new Date(
+      calendarCursor.getFullYear(),
+      calendarCursor.getMonth() - 1,
+      1
+    );
+    renderCalendar();
+  });
+}
+
+if (calendarNext) {
+  calendarNext.addEventListener('click', () => {
+    calendarCursor = new Date(
+      calendarCursor.getFullYear(),
+      calendarCursor.getMonth() + 1,
+      1
+    );
+    renderCalendar();
+  });
+}
+
+/* =========================
    数字时钟
-   ========================= */
+========================= */
 function updateClock() {
   if (!clockText) return;
 
@@ -337,10 +475,16 @@ function updateClock() {
   clockText.textContent = `${hh}:${mm}`;
 }
 
+/* =========================
+   初始化
+========================= */
 updateClock();
 setInterval(updateClock, 30000);
 
-/* =========================
-   初始化
-   ========================= */
+updateGreetingAge();
+setInterval(updateGreetingAge, 100);
+
+renderCalendar();
+setInterval(renderCalendar, 60000);
+
 loadAndRenderShortcuts();

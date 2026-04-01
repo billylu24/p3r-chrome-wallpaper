@@ -14,16 +14,14 @@
   <div class="video-overlay"></div>
 
   <main class="dashboard-grid">
-    <!-- Left top -->
-    <section class="panel tile-panel app-panel left-top">
-      <div class="spotify-mark" aria-label="Spotify">
-        <span></span>
-        <span></span>
-        <span></span>
+    <!-- Left top: clock -->
+    <section class="panel clock-panel left-top mini-clock-panel">
+      <div class="clock-face mini-clock-face">
+        <div class="digital-clock mini-digital-clock" id="clock-text">15:18</div>
       </div>
     </section>
 
-    <!-- Left bottom -->
+    <!-- Left bottom: character -->
     <section class="panel tile-panel character-panel left-bottom">
       <img
         class="character-img"
@@ -34,15 +32,17 @@
 
     <!-- Hero -->
     <section class="hero-block center-top">
-      <img
-        src="logo.svg"
-        alt="P3R Logo"
-        class="logo hero-logo glitch-logo"
-      />
+      <section class="panel logo-panel">
+        <img
+          src="logo.svg"
+          alt="P3R Logo"
+          class="logo hero-logo glitch-logo"
+        />
+      </section>
 
       <section class="panel info-panel">
-        <p class="info-title">Hi Giaok...</p>
-        <p class="info-subtitle">Rn ur 18.0000 yr old</p>
+        <p class="info-title" id="greeting-title">Hi Giaok...</p>
+        <p class="info-subtitle" id="greeting-age">Right now you are 18.000000 years old!</p>
       </section>
     </section>
 
@@ -73,12 +73,17 @@
       <ul id="suggestions-list" class="suggestions"></ul>
     </form>
 
-    <!-- Clock + tabs -->
+    <!-- Lower center: Spotify iframe host -->
     <section class="center-lower">
-      <section class="panel clock-panel">
-        <div class="clock-face">
-          <div class="digital-clock" id="clock-text">15:18</div>
-        </div>
+      <section class="panel spotify-host-panel">
+        <iframe
+          id="spotify-panel-frame"
+          src=" https://billylu24.github.io/spotifypageGIAOK/"
+          title="Spotify Panel"
+          allow="autoplay; encrypted-media"
+          loading="eager"
+          referrerpolicy="no-referrer"
+        ></iframe>
       </section>
 
       <div class="shortcuts-container" id="shortcuts-container">
@@ -88,7 +93,21 @@
 
     <!-- Calendar -->
     <section class="panel calendar-panel calendar-block">
-      <div class="calendar-title" id="calendar-title">2026/03/25 Wed</div>
+      <div class="calendar-header">
+        <button class="calendar-nav" id="calendar-prev" type="button" aria-label="Previous month">
+          ‹
+        </button>
+
+        <div class="calendar-title-wrap">
+          <div class="calendar-title" id="calendar-title">March 2026</div>
+          <div class="calendar-subtitle" id="calendar-subtitle">Wednesday, March 25</div>
+        </div>
+
+        <button class="calendar-nav" id="calendar-next" type="button" aria-label="Next month">
+          ›
+        </button>
+      </div>
+
       <div class="calendar-grid" id="calendar-grid"></div>
     </section>
 
