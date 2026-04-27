@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>P3R New Tab</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <video autoplay loop muted playsinline id="bg-video">
     <source src="loop.mp4" type="video/mp4" />
@@ -21,13 +23,43 @@
       </div>
     </section>
 
-    <!-- Left bottom: character -->
+    <!-- Bayern match ticker -->
+    <section class="panel bayern-ticker left-tabs" aria-live="polite">
+      <div class="bayern-scoreline">
+        <div class="bayern-ticker-team">
+          <img class="bayern-logo" id="bayern-home-logo" alt="" />
+          <span class="bayern-team-name" id="bayern-home-name">Home</span>
+        </div>
+
+        <div class="bayern-ticker-score">
+          <span id="bayern-home-score">-</span>
+          <span class="bayern-score-divider">:</span>
+          <span id="bayern-away-score">-</span>
+        </div>
+
+        <div class="bayern-ticker-team">
+          <img class="bayern-logo" id="bayern-away-logo" alt="" />
+          <span class="bayern-team-name" id="bayern-away-name">Away</span>
+        </div>
+      </div>
+
+      <div class="bayern-ticker-meta">
+        <span id="bayern-status">vs</span>
+        <span id="bayern-competition">FC Bayern Munich</span>
+      </div>
+      <div class="bayern-detail" id="bayern-detail">Fetching latest Bayern match...</div>
+    </section>
+
+    <!-- Left bottom: Live2D character -->
     <section class="panel tile-panel character-panel left-bottom">
-      <img
-        class="character-img"
-        src="icon.jpg"
-        alt="Character"
-      />
+      <iframe
+        id="character-frame"
+        class="character-frame"
+        src="character/index.html"
+        title="Live2D Character"
+        loading="eager"
+        referrerpolicy="no-referrer"
+      ></iframe>
     </section>
 
     <!-- Hero -->
@@ -75,10 +107,10 @@
 
     <!-- Lower center: Spotify iframe host -->
     <section class="center-lower">
-      <section class="panel spotify-host-panel">
+      <section class="panel spotify-host-panel" aria-label="Player">
         <iframe
           id="spotify-panel-frame"
-          src=" https://billylu24.github.io/spotifypageGIAOK/"
+          src="https://billylu24.github.io/spotifypageGIAOK/?compact=1"
           title="Spotify Panel"
           allow="autoplay; encrypted-media"
           loading="eager"
@@ -91,28 +123,49 @@
       </div>
     </section>
 
-    <!-- Calendar -->
-    <section class="panel calendar-panel calendar-block">
-      <div class="calendar-header">
-        <button class="calendar-nav" id="calendar-prev" type="button" aria-label="Previous month">
-          ‹
-        </button>
-
-        <div class="calendar-title-wrap">
-          <div class="calendar-title" id="calendar-title">March 2026</div>
-          <div class="calendar-subtitle" id="calendar-subtitle">Wednesday, March 25</div>
+    <!-- Daily command + calendar -->
+    <section class="calendar-stack calendar-block">
+      <section class="panel daily-panel">
+        <div class="daily-header">
+          <div>
+            <div class="daily-title">Command Vault</div>
+            <div class="daily-subtitle">Copy-ready dev commands</div>
+          </div>
         </div>
 
-        <button class="calendar-nav" id="calendar-next" type="button" aria-label="Next month">
-          ›
-        </button>
-      </div>
+        <div class="command-vault" id="command-vault">
+          <div class="command-tabs" id="command-tabs" aria-label="Command categories"></div>
+          <div class="command-list" id="command-list"></div>
+        </div>
+      </section>
 
-      <div class="calendar-grid" id="calendar-grid"></div>
+      <section class="panel calendar-panel">
+        <div class="calendar-header">
+          <button class="calendar-nav" id="calendar-prev" type="button" aria-label="Previous month">
+            ‹
+          </button>
+
+          <div class="calendar-title-wrap">
+            <div class="calendar-title" id="calendar-title">March 2026</div>
+            <div class="calendar-subtitle" id="calendar-subtitle">Wednesday, March 25</div>
+          </div>
+
+          <button class="calendar-nav" id="calendar-next" type="button" aria-label="Next month">
+            ›
+          </button>
+        </div>
+
+        <div class="calendar-grid" id="calendar-grid"></div>
+      </section>
     </section>
 
-    <!-- Right memo -->
-    <aside class="panel memo-panel right-memo"></aside>
+    <!-- Right tools -->
+    <aside class="panel memo-panel right-memo">
+      <div class="tool-bubble-stage" id="tool-bubble-stage">
+        <svg class="tool-bubble-svg" id="tool-bubble-svg" aria-hidden="true"></svg>
+        <div class="tool-bubble-links" id="tool-bubble-links"></div>
+      </div>
+    </aside>
   </main>
 
   <!-- Add shortcut modal -->

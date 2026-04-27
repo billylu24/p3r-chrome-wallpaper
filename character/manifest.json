@@ -1,0 +1,17 @@
+{
+  "extracted_files": [
+    "index.original.html",
+    "favicon.ico",
+    "index.html",
+    "src/PlatformManager.js",
+    "src/LAppDefine.js",
+    "src/LAppModel.js",
+    "src/LAppLive2DManager.js",
+    "src/main.js",
+    "assets/image/costumeBG.png",
+    "src/lib/live2d.min.js",
+    "src/framework/Live2DFramework.js",
+    "src/utils/MatrixStack.js",
+    "src/utils/ModelSettingJson.js"
+  ]
+}

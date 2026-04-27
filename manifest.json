@@ -3,16 +3,13 @@
   "name": "P3R Dynamic New Tab",
   "version": "1.5",
   "description": "Persona 3 Reload style new tab.",
-  "icons": {
-    "16": "icon.jpg",
-    "48": "icon.jpg",
-    "128": "icon.jpg"
-  },
   "chrome_url_overrides": {
     "newtab": "newtab.html"
   },
   "host_permissions": [
-    "https://suggestqueries.google.com/*"
+    "https://suggestqueries.google.com/*",
+    "https://site.web.api.espn.com/*",
+    "https://site.api.espn.com/*"
   ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"

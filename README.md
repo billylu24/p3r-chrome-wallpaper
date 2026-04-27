@@ -1,101 +1,152 @@
-# P3R Dynamic New Tab (Persona 3 Reload Style)
+# P3R Chrome Wallpaper / New Tab
 
-[**English Version**](#english-version) | [**中文版本**](#chinese-version)
+一个 Persona 3 Reload 风格的 Chrome New Tab 扩展。它把默认新标签页替换成一个蓝黑海报感桌面：背景视频、Live2D 角色区、搜索栏、快捷入口、三周日历，以及一个可复制常用开发命令的 Command Vault。
 
----
+本项目是纯前端 Chrome 扩展，不依赖后端服务，不请求系统性能权限。
 
-<div id="english-version"></div>
+## 当前功能
 
-## 🌑 English Version
+- P3R 风格新标签页
+  - 蓝黑主视觉、点阵背景、简化卡片布局。
+  - 内置 `loop.mp4` 作为动态背景。
+  - 页面会根据屏幕尺寸自动缩放，适配笔记本和大屏。
 
-**P3R Dynamic New Tab** is a Chrome browser extension inspired by the visual style of *Persona 3 Reload*. It replaces your standard new tab page with a stylish, dynamic interface featuring a pre-packaged video background and unique UI interactions faithful to the game's aesthetic.
+- 搜索栏
+  - 默认 Google 搜索。
+  - 支持 Bilibili、GitHub、YouTube 快捷切换。
+  - 支持 Google 搜索建议。
 
-### ✨ Key Features
+- Live2D 角色区
+  - 通过 `character/index.html` iframe 加载。
+  - 鼠标位置会传给角色 iframe，用于角色跟随交互。
+  - 不对角色加滤镜，避免颜色被覆盖。
 
-* **Immersive Visuals**:
-    * **Dynamic Video Background**: Comes with a built-in full-screen video loop (`loop.mp4`) to create a unique atmosphere out of the box.
-    * **P3R Style UI**: Faithfully recreates the iconic blue/dark color scheme and interface style of Persona 3 Reload.
-    * **Glitch Hover Effects**: Hovering over icons triggers a stylish chromatic aberration "glitch" and shake effect.
+- Command Vault
+  - 替代原来的 Daily Command。
+  - 外层分类横向滚动，可鼠标滚轮横滑，也可拖拽。
+  - 内层命令列表可滚动。
+  - 点击任意命令即可复制到剪贴板。
+  - 当前分类包括：
+    - C / C++
+    - CMake
+    - Python
+    - Conda
+    - PowerShell
+    - WSL
+    - CUDA
+    - Ollama
+    - npm
+    - Git
+    - Linux
+    - SSH
+    - VS Code
+    - macOS
 
-* **Powerful Search**:
-    * **Smart Suggestions**: Real-time search suggestions are fetched from Google as you type.
-    * **Multi-Engine Switcher**: Quickly switch between **Google**, **Bilibili**, **GitHub**, and **YouTube** using the engine buttons next to the search bar.
+- 三周日历
+  - 只显示上周、本周、下周。
+  - 当前周日期更大、更明显。
+  - 左右按钮按周切换。
 
-* **Customizable Shortcuts**:
-    * **Manage Links**: Add your own shortcuts or delete existing ones directly from the UI. Data is saved locally.
-    * **Default Apps**: Pre-loaded with Spotify, Discord, Instagram, LeetCode, and ChatGPT.
-    * **Google Apps Menu**: A stylish top-right menu for quick access to Gmail, Drive, Docs, etc..
+- 快捷入口
+  - 中部快捷按钮支持本地添加和删除。
+  - 右侧工具区提供 Gmail、Docs、Drive、Calendar、Notion、ChatGPT、GitHub、YouTube、Maps、Keep 等入口。
 
-* **Responsive Design**: Optimized layout that automatically scales and adjusts for smaller screens (e.g., Laptops).
+- Bayern 赛事卡片
+  - 从 ESPN API 获取 Bayern 最近/下一场比赛信息。
+  - 使用本地缓存作为请求失败时的降级。
 
-### 🛠️ Installation
+## 安装
 
-1.  **Download the Code**: Download this project folder to your computer.
-2.  **Open Extension Management**:
-    * In Chrome, type `chrome://extensions/` in the address bar and press Enter.
-3.  **Enable Developer Mode**:
-    * Toggle the **"Developer mode"** switch in the top right corner.
-4.  **Load the Extension**:
-    * Click the **"Load unpacked"** button in the top left.
-    * Select the folder containing these extension files.
-5.  **Done**: Open a new tab to see your new P3R interface!
+1. 打开 Chrome。
+2. 进入 `chrome://extensions/`。
+3. 打开右上角 `Developer mode`。
+4. 点击 `Load unpacked`。
+5. 选择本项目文件夹。
+6. 打开新标签页。
 
-### 📂 Project Structure
+## 文件结构
 
-* `manifest.json`: Configuration file for the Chrome extension.
-* `newtab.html`: The HTML structure for the new tab page.
-* `style.css`: Styling for the layout, animations, and glitch effects.
-* `script.js`: Handles search suggestions, shortcuts logic, and UI interactions.
-* `loop.mp4`: The background video file (included).
-* `assets/`: Icons and images.
+```text
+manifest.json        Chrome 扩展配置
+newtab.html          新标签页结构
+style.css            视觉、布局、响应式缩放
+script.js            搜索、日历、Command Vault、快捷方式、赛事卡片逻辑
+loop.mp4             背景视频
+logo.svg             P3R logo
+character/           Live2D 角色页面与相关资源
+README.md            项目说明
+```
 
----
+## 权限说明
 
-<div id="chinese-version"></div>
+`manifest.json` 当前只包含网络 host 权限：
 
-## 🌑 中文版本
+```text
+https://suggestqueries.google.com/*
+https://site.web.api.espn.com/*
+https://site.api.espn.com/*
+```
 
-**P3R Dynamic New Tab** 是一款深受《女神异闻录3 Reload》(Persona 3 Reload) 视觉风格启发的 Chrome 浏览器扩展。它将您的默认新标签页替换为一个充满沉浸感的动态界面，内置视频背景、故障艺术动画以及实用的生产力工具。
+用途：
 
-### ✨ 主要功能
+- Google suggestion API：搜索建议。
+- ESPN API：Bayern 赛事信息。
 
-* **沉浸式视觉体验**：
-    * **动态视频背景**：扩展包内已完整包含全屏循环视频 (`loop.mp4`)，安装即用，无需额外配置。
-    * **P3R UI 风格**：忠实还原了游戏中的深蓝/青色调、字体和布局设计。
-    * **故障艺术特效 (Glitch)**：鼠标悬停在图标或快捷方式上时，会触发标志性的色差故障抖动效果。
+本扩展不请求 `chrome.system.cpu`、`chrome.system.memory` 等系统性能权限，也不读取真实 CPU/GPU/RAM/VRAM 数据。
 
-* **强大的搜索功能**：
-    * **智能建议**：输入时实时获取 Google 搜索联想词。
-    * **多引擎切换**：搜索框旁设有快捷按钮，可在 **Google**、**Bilibili**、**GitHub** 和 **YouTube** 之间快速切换搜索目标。
+## Command Vault 数据维护
 
-* **自定义快捷方式**：
-    * **管理链接**：您可以点击 `+` 添加新网站，或点击 `×` 删除不需要的快捷方式。数据保存在本地浏览器中。
-    * **默认应用**：预设了 Spotify, Discord, Instagram, LeetCode, ChatGPT 等常用网站。
-    * **Google 应用菜单**：右上角设有 P3R 风格的折叠菜单，可快速访问 Gmail, Drive, Docs 等服务。
+命令数据集中在 `script.js` 的 `COMMAND_VAULT` 常量里。每个分类结构如下：
 
-* **响应式设计**：针对不同屏幕尺寸（特别是笔记本电脑）进行了布局优化，自动调整显示比例。
+```js
+{
+  category: 'Python',
+  commands: [
+    ['Run file', 'python main.py', 'Run a Python script.']
+  ]
+}
+```
 
-### 🛠️ 安装指南
+每条命令格式：
 
-1.  **下载源码**：将本项目文件夹下载到您的电脑上。
-2.  **打开扩展程序管理**：
-    * 在 Chrome 地址栏输入 `chrome://extensions/` 并回车。
-3.  **开启开发者模式**：
-    * 打开右上角的 **“开发者模式 (Developer mode)”** 开关。
-4.  **加载扩展**：
-    * 点击左上角的 **“加载已解压的扩展程序 (Load unpacked)”** 按钮。
-    * 选择包含本项目文件的文件夹。
-5.  **完成**：打开一个新的标签页即可直接体验！
+```text
+[标题, 可复制命令, 简短解释]
+```
 
-### 📂 项目结构
+添加新命令时只需要往对应分类的 `commands` 数组里追加一项。添加新分类时追加一个新的对象即可。
 
-* `manifest.json`: 配置文件 (版本 1.5)。
-* `newtab.html`: 新标签页的 HTML 结构。
-* `style.css`: 样式表，包含所有布局、动画和故障特效。
-* `script.js`: 核心逻辑，处理搜索建议、本地存储（快捷方式管理）和交互。
-* `loop.mp4`: 背景视频文件（已包含）。
-* `assets/`: 包含图标和图片资源。
+## 本地开发
 
----
+这个项目没有构建步骤，直接作为 unpacked Chrome extension 加载即可。
 
-*Credits: Based on the visual style of ATLUS's Persona 3 Reload. Developed by billylu24.*
+如果只是本地预览静态页面，可以在项目目录启动一个简单服务器：
+
+```bash
+python -m http.server 8000
+```
+
+然后访问：
+
+```text
+http://localhost:8000/newtab.html
+```
+
+注意：作为普通网页打开时，部分 Chrome extension 场景和新标签页行为可能和真正加载扩展后略有差异。
+
+## 设计方向
+
+当前视觉目标不是完整复刻游戏 UI，而是借用 P3R 标题画面的几个元素：
+
+- 大面积蓝色背景
+- 黑色斜向块
+- 点阵纹理
+- 高对比但可读的冷白/淡蓝卡片
+- 简化的工具面板
+
+后续如果继续迭代，优先保持信息可读性，再添加装饰。
+
+## English Summary
+
+P3R Chrome Wallpaper is a Persona 3 Reload inspired Chrome New Tab extension. It includes a dynamic video background, Live2D character area, search bar, shortcut launcher, three-week calendar, Bayern match card, and a copy-ready developer Command Vault.
+
+Load it through `chrome://extensions/` with Developer Mode enabled, then choose this folder via `Load unpacked`.
