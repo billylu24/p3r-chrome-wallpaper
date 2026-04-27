@@ -1,8 +1,17 @@
 # P3R Chrome Wallpaper / New Tab
 
-一个 Persona 3 Reload 风格的 Chrome New Tab 扩展。它把默认新标签页替换成一个蓝黑海报感桌面：背景视频、Live2D 角色区、搜索栏、快捷入口、三周日历，以及一个可复制常用开发命令的 Command Vault。
+一个 Persona 3 Reload 风格的 Chrome New Tab 扩展。它把默认新标签页替换成一个蓝黑海报感桌面：背景视频、角色占位区、搜索栏、快捷入口、三周日历，以及一个可复制常用开发命令的 Command Vault。
 
 本项目是纯前端 Chrome 扩展，不依赖后端服务，不请求系统性能权限。
+
+## Public Branch Notice
+
+这个公开分支不包含 Live2D character 资源。角色模型、贴图、动作文件和相关运行时代码可能受到版权或授权限制，因此没有放进公开仓库。
+
+完整 character 版本应保存在私有仓库或私有分支工作副本中。注意：GitHub 的可见性是 repository 级别，不能把同一个 repository 的某个 branch 设为 private、另一个 branch 设为 public。如果需要真正的 public/private 隔离，应使用两个 repository：
+
+- private repo：保留完整 `character/` 资源。
+- public repo：使用当前公开分支，不包含 `character/` 资源。
 
 ## 当前功能
 
@@ -16,10 +25,9 @@
   - 支持 Bilibili、GitHub、YouTube 快捷切换。
   - 支持 Google 搜索建议。
 
-- Live2D 角色区
-  - 通过 `character/index.html` iframe 加载。
-  - 鼠标位置会传给角色 iframe，用于角色跟随交互。
-  - 不对角色加滤镜，避免颜色被覆盖。
+- 角色占位区
+  - 公开分支显示 character placeholder。
+  - 完整 Live2D 资源不随公开分支发布。
 
 - Command Vault
   - 替代原来的 Daily Command。
@@ -73,7 +81,6 @@ style.css            视觉、布局、响应式缩放
 script.js            搜索、日历、Command Vault、快捷方式、赛事卡片逻辑
 loop.mp4             背景视频
 logo.svg             P3R logo
-character/           Live2D 角色页面与相关资源
 README.md            项目说明
 ```
 
@@ -147,6 +154,8 @@ http://localhost:8000/newtab.html
 
 ## English Summary
 
-P3R Chrome Wallpaper is a Persona 3 Reload inspired Chrome New Tab extension. It includes a dynamic video background, Live2D character area, search bar, shortcut launcher, three-week calendar, Bayern match card, and a copy-ready developer Command Vault.
+P3R Chrome Wallpaper is a Persona 3 Reload inspired Chrome New Tab extension. It includes a dynamic video background, character placeholder area, search bar, shortcut launcher, three-week calendar, Bayern match card, and a copy-ready developer Command Vault.
+
+This public branch intentionally omits Live2D character assets because those files may be copyright-protected or license-restricted. Keep the complete character build in a private repository.
 
 Load it through `chrome://extensions/` with Developer Mode enabled, then choose this folder via `Load unpacked`.

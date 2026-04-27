@@ -3205,6 +3205,41 @@ body::after {
   font-size: 12px;
 }
 
+/* Public branch character placeholder */
+.character-placeholder {
+  width: 100%;
+  height: 100%;
+  padding: 18px;
+  display: grid;
+  align-content: end;
+  gap: 6px;
+  color: var(--p3-ink);
+  background:
+    radial-gradient(circle at 8px 8px, rgba(6, 19, 38, 0.12) 0 1.4px, transparent 1.8px) 0 0 / 17px 17px,
+    linear-gradient(135deg, rgba(247, 251, 255, 0.84), rgba(40, 160, 255, 0.26));
+}
+
+.character-placeholder span {
+  color: #005fd8;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+}
+
+.character-placeholder strong {
+  font-size: 18px;
+  font-weight: 950;
+  line-height: 1;
+}
+
+.character-placeholder small {
+  max-width: 170px;
+  color: rgba(6, 19, 38, 0.62);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
 /* Stable search bar states */
 .search-form,
 .dashboard-search,
