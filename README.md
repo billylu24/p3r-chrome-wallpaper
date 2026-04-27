@@ -4,6 +4,12 @@
 
 本项目是纯前端 Chrome 扩展，不依赖后端服务，不请求系统性能权限。
 
+## Demo
+
+<video src="media/demo.mp4" controls width="100%"></video>
+
+[Open demo video](media/demo.mp4)
+
 ## Public Branch Notice
 
 这个公开分支不包含 Live2D character 资源。角色模型、贴图、动作文件和相关运行时代码可能受到版权或授权限制，因此没有放进公开仓库。
