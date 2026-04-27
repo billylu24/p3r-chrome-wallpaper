@@ -6,9 +6,11 @@
 
 ## Demo
 
-[![Watch the P3R Chrome Wallpaper demo](media/demo-preview.svg)](media/demo.mp4)
 
-GitHub does not reliably render repository MP4 files as inline README video players, so the preview above links directly to the demo video.
+
+https://github.com/user-attachments/assets/996de415-4552-4675-91f5-577049a2e654
+
+
 
 ## Public Branch Notice
 
