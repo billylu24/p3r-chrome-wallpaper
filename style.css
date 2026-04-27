@@ -711,7 +711,7 @@ body {
 
 .calendar-stack {
   display: grid;
-  grid-template-rows: minmax(0, 1fr) 104px;
+  grid-template-rows: minmax(0, 1fr) 110px;
   gap: 10px;
   height: 100%;
   min-height: 0;
@@ -3177,28 +3177,31 @@ body::after {
 }
 
 .calendar-grid {
-  grid-auto-rows: minmax(11px, auto);
+  grid-template-rows: 12px 13px 24px 13px;
+  grid-auto-rows: unset;
   gap: 2px;
 }
 
 .calendar-cell {
-  min-height: 11px;
+  min-height: 0;
+  height: 100%;
   font-size: 8px;
   font-weight: 650;
+  line-height: 1;
 }
 
 .calendar-cell.day {
-  min-height: 11px;
+  min-height: 0;
 }
 
 .calendar-cell.current-week {
-  min-height: 21px;
+  min-height: 0;
   font-size: 12px;
   font-weight: 950;
 }
 
 .calendar-cell.today {
-  min-height: 21px;
+  min-height: 0;
   font-size: 12px;
 }
 
