@@ -1367,9 +1367,11 @@ const BAYERN_TEAM_ID = '132';
 const BAYERN_DATA_URLS = [
   `https://site.web.api.espn.com/apis/site/v2/sports/soccer/all/teams/${BAYERN_TEAM_ID}/schedule?fixture=true`,
   `https://site.web.api.espn.com/apis/site/v2/sports/soccer/all/teams/${BAYERN_TEAM_ID}/schedule`,
-  `https://site.api.espn.com/apis/site/v2/sports/soccer/ger.1/teams/${BAYERN_TEAM_ID}/schedule?fixture=false`
+  `https://site.web.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/teams/${BAYERN_TEAM_ID}/schedule`,
+  `https://site.api.espn.com/apis/site/v2/sports/soccer/ger.1/teams/${BAYERN_TEAM_ID}/schedule?fixture=false`,
+  'https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard'
 ];
-const BAYERN_CACHE_KEY = 'p3r_bayern_match_cache';
+const BAYERN_CACHE_KEY = 'p3r_bayern_match_cache_v2';
 const BAYERN_CACHE_MS = 5 * 60 * 1000;
 
 let bayernLoading = false;
@@ -1554,13 +1556,19 @@ function loadBayernMatch(forceRefresh = false) {
   bayernLoading = true;
   if (bayernStatus) bayernStatus.textContent = 'Loading';
 
-  Promise.all(BAYERN_DATA_URLS.map((url) => (
+  Promise.allSettled(BAYERN_DATA_URLS.map((url) => (
     fetch(url).then((res) => {
       if (!res.ok) throw new Error(`Bayern data failed: ${res.status}`);
       return res.json();
     })
   )))
-    .then((data) => {
+    .then((results) => {
+      const data = results
+        .filter((result) => result.status === 'fulfilled')
+        .map((result) => result.value);
+
+      if (!data.length) throw new Error('All Bayern data requests failed');
+
       const mergedData = mergeBayernData(data);
       writeBayernCache(mergedData);
       renderBayernFromData(mergedData);
