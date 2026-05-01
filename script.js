@@ -1368,11 +1368,11 @@ const BAYERN_DATA_URLS = [
   `https://site.web.api.espn.com/apis/site/v2/sports/soccer/all/teams/${BAYERN_TEAM_ID}/schedule?fixture=true`,
   `https://site.web.api.espn.com/apis/site/v2/sports/soccer/all/teams/${BAYERN_TEAM_ID}/schedule`,
   `https://site.web.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/teams/${BAYERN_TEAM_ID}/schedule`,
-  `https://site.api.espn.com/apis/site/v2/sports/soccer/ger.1/teams/${BAYERN_TEAM_ID}/schedule?fixture=false`,
-  'https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard'
+  `https://site.api.espn.com/apis/site/v2/sports/soccer/ger.1/teams/${BAYERN_TEAM_ID}/schedule?fixture=false`
 ];
-const BAYERN_CACHE_KEY = 'p3r_bayern_match_cache_v2';
+const BAYERN_CACHE_KEY = 'p3r_bayern_match_cache_v3';
 const BAYERN_CACHE_MS = 5 * 60 * 1000;
+const BAYERN_SCOREBOARD_RANGE_DAYS = 14;
 
 let bayernLoading = false;
 
@@ -1397,6 +1397,28 @@ function getStatusType(event) {
 
 function getEventCompetitors(event) {
   return getEventCompetition(event).competitors || event.competitors || [];
+}
+
+function isBayernCompetitor(competitor) {
+  const team = competitor.team || competitor;
+  const teamIds = [team.id, team.uid, competitor.id, competitor.uid]
+    .filter(Boolean)
+    .map(String);
+  const teamNames = [
+    team.displayName,
+    team.shortDisplayName,
+    team.name,
+    competitor.displayName
+  ]
+    .filter(Boolean)
+    .map((value) => String(value).toLowerCase());
+
+  return teamIds.some((value) => value === BAYERN_TEAM_ID || value.endsWith(`:${BAYERN_TEAM_ID}`)) ||
+    teamNames.some((value) => value.includes('bayern'));
+}
+
+function isBayernEvent(event) {
+  return getEventCompetitors(event).some(isBayernCompetitor);
 }
 
 function getCompetitorName(competitor) {
@@ -1432,6 +1454,26 @@ function formatBayernDate(dateString) {
     hour: 'numeric',
     minute: '2-digit'
   });
+}
+
+function formatEspnDateParam(date) {
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+  return `${yyyy}${mm}${dd}`;
+}
+
+function getBayernDataUrls() {
+  const from = new Date();
+  const to = new Date();
+
+  from.setDate(from.getDate() - BAYERN_SCOREBOARD_RANGE_DAYS);
+  to.setDate(to.getDate() + BAYERN_SCOREBOARD_RANGE_DAYS);
+
+  return [
+    ...BAYERN_DATA_URLS,
+    `https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?dates=${formatEspnDateParam(from)}-${formatEspnDateParam(to)}`
+  ];
 }
 
 function pickBayernMatch(events) {
@@ -1470,7 +1512,7 @@ function mergeBayernData(dataItems) {
   const eventsById = new Map();
 
   dataItems.forEach((data) => {
-    getBayernEvents(data).forEach((event) => {
+    getBayernEvents(data).filter(isBayernEvent).forEach((event) => {
       const id = event.id || event.uid || `${event.name}-${event.date}`;
       eventsById.set(id, event);
     });
@@ -1556,7 +1598,7 @@ function loadBayernMatch(forceRefresh = false) {
   bayernLoading = true;
   if (bayernStatus) bayernStatus.textContent = 'Loading';
 
-  Promise.allSettled(BAYERN_DATA_URLS.map((url) => (
+  Promise.allSettled(getBayernDataUrls().map((url) => (
     fetch(url).then((res) => {
       if (!res.ok) throw new Error(`Bayern data failed: ${res.status}`);
       return res.json();
