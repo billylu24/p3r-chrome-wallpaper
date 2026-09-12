@@ -1,8 +1,8 @@
 # P3R Chrome Wallpaper / New Tab
 
-A Persona 3 Reload inspired Chrome New Tab extension. It replaces the default new tab page with a blue and black poster-style desktop: animated background, character placeholder area, search bar, shortcuts, a compact three-week calendar, Bayern match card, and a copy-ready developer Command Vault.
+A Persona 3 Reload inspired Chrome New Tab extension. It replaces the default new tab page with a blue and black poster-style desktop: animated background, character placeholder area, search bar, shortcuts, a compact three-week calendar, Bayern match card, and a copy-ready developer Command Vault
 
-一个 Persona 3 Reload 风格的 Chrome New Tab 扩展。它把默认新标签页替换成蓝黑海报感桌面：动态背景、角色占位区、搜索栏、快捷入口、三周日历、Bayern 赛事卡片，以及可一键复制开发命令的 Command Vault。
+一个 Persona 3 Reload 风格的 Chrome New Tab 扩展。它把默认新标签页替换成蓝黑海报感桌面：动态背景、角色占位区、搜索栏、快捷入口、三周日历、Bayern 赛事卡片，以及可一键复制开发命令的 Command Vault
 
 ## Demo
 
